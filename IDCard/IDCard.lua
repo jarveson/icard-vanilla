@@ -4,7 +4,7 @@ local registry = {}
 
 local function click()
 	local reg = registry[ItemRefTooltip]
-    if IsShiftKeyDown() and ChatFrameEditBox:IsVisible() and reg.link then
+    if IsShiftKeyDown() and ChatFrameEditBox:IsVisible() and reg and reg.link then
 		local name, _, quality = GetItemInfo(reg.link)
     	if name then
         	local _,_,_,hex = GetItemQualityColor(quality)
@@ -23,8 +23,7 @@ local origSetItemRef = SetItemRef;
 
 SetItemRef = function(link,text,button) 
 	origSetItemRef(link,text,button);
-	local reg = registry[ItemRefTooltip]
-	if not IsShiftKeyDown() and not IsControlKeyDown() and reg.link then
+	if not IsShiftKeyDown() and not IsControlKeyDown() then
 		if skinTooltip then
 			IDCard:SkinFrame();
 		end
